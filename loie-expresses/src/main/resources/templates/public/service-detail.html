@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${service != null ? service.title : 'Service'})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="page-banner"><div class="container-x"><div class="crumb"><a th:href="@{/}">Home</a> / <a th:href="@{/services}">Services</a></div>
+  <h1 th:text="${service != null ? service.title : 'Service'}">Service</h1></div></div>
+<section class="section" th:if="${service != null}">
+  <div class="container-x">
+    <div class="row g-5">
+      <div class="col-lg-7">
+        <img class="img-fluid rounded shadow-sm mb-4" th:if="${service.featuredImage != null}" th:src="@{'/uploads/' + ${service.featuredImage}}" alt="service">
+        <h3 th:text="${service.title}">Title</h3>
+        <p class="text-muted" th:text="${service.description}">Description</p>
+        <h5 class="mt-4" th:if="${service.benefits != null and !service.benefits.isEmpty()}">Benefits</h5>
+        <ul class="text-muted" th:if="${service.benefits != null and !service.benefits.isEmpty()}">
+          <li th:each="b : ${service.benefits.split('\r?\n')}" th:text="${b}" th:if="${!b.trim().isEmpty()}">Benefit</li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <div class="form-card">
+          <h5>Interested in this service?</h5>
+          <p class="text-muted small">Get in touch and we'll help you right away.</p>
+          <p><i class="fas fa-phone text-green me-2"></i><span th:text="${settings.phone}"></span></p>
+          <p><i class="fas fa-envelope text-green me-2"></i><span th:text="${settings.email}"></span></p>
+          <a class="btn btn-gold w-100" th:href="@{/quote}">Get a Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" th:if="${service == null}"><div class="container-x text-center"><p>Service not found.</p><a class="btn btn-brand" th:href="@{/services}">Back to services</a></div></section>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body></html>

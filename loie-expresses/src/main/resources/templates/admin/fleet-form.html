@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Vehicle form')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('fleet')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head"><h1 th:text="${vehicle.id != null ? 'Edit vehicle' : 'Add vehicle'}">Vehicle</h1></div>
+  <form class="card-panel" th:action="@{/admin/fleet/save}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label">Name</label><input class="form-control" th:field="*{name}" required></div>
+      <div class="col-md-3"><label class="form-label">Type</label><input class="form-control" th:field="*{type}" placeholder="Bus / Bajaj / Car"></div>
+      <div class="col-md-3"><label class="form-label">Plate number</label><input class="form-control" th:field="*{plateNumber}"></div>
+      <div class="col-md-3"><label class="form-label">Capacity</label><input class="form-control" type="number" th:field="*{capacity}"></div>
+      <div class="col-md-9"><label class="form-label">Image</label><input class="form-control" type="file" name="imageFile" accept="image/*"></div>
+      <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" rows="3" th:field="*{description}"></textarea></div>
+      <div class="col-12 form-check ms-2"><input class="form-check-input" type="checkbox" th:field="*{available}" id="av"><label class="form-check-label" for="av">Available</label></div>
+    </div>
+    <div class="mt-3"><button class="btn btn-brand px-4"><i class="fas fa-save me-1"></i> Save</button>
+      <a class="btn btn-outline-secondary" th:href="@{/admin/fleet}">Cancel</a></div>
+  </form>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

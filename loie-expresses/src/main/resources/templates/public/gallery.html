@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Gallery')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="page-banner"><div class="container-x"><div class="crumb"><a th:href="@{/}">Home</a> / Gallery</div><h1>Gallery</h1></div></div>
+<section class="section">
+  <div class="container-x">
+    <div th:if="${gallery.isEmpty()}" class="text-center text-muted">No images yet.</div>
+    <div class="gallery-grid">
+      <img th:each="g : ${gallery}" th:src="@{'/uploads/' + ${g.fileName}}" th:alt="${g.title}"
+           data-bs-toggle="modal" data-bs-target="#imgModal" th:attr="data-img=@{'/uploads/' + ${g.fileName}}">
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="imgModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+  <img id="modalImg" class="img-fluid rounded" src="" alt="preview"></div></div></div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script>
+document.querySelectorAll('.gallery-grid img').forEach(function(img){
+  img.addEventListener('click',function(){document.getElementById('modalImg').src=this.getAttribute('data-img');});
+});
+</script>
+</body></html>

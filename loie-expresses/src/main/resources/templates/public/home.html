@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="container-x hero-inner">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="hero-badge"><i class="fas fa-location-dot"></i> Proudly serving Tanzania</span>
+                <h1 th:text="${settings.heroTitle}">Move Anywhere, Anytime with LOIE EXPRESSES</h1>
+                <p class="lead mt-3" th:text="${settings.heroSubtitle}">Special hire, private hire, consultation and affordable Bajaj &amp; Bodaboda financing.</p>
+                <div class="d-flex gap-2 mt-4 flex-wrap">
+                    <a class="btn btn-gold" th:href="@{/quote}">Get a Quote <i class="fas fa-arrow-right ms-1"></i></a>
+                    <a class="btn btn-ghost" th:href="@{/services}">Explore Services</a>
+                </div>
+                <div class="hero-stats">
+                    <div><div class="num">5+</div><div class="lbl">Core services</div></div>
+                    <div><div class="num">100%</div><div class="lbl">Local expertise</div></div>
+                    <div><div class="num">24/7</div><div class="lbl">Customer support</div></div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-visual">
+                    <div class="route">
+                        <span class="pin a"><i class="fas fa-location-dot"></i></span>
+                        <span class="path"></span>
+                        <i class="fas fa-truck-fast van"></i>
+                        <span class="pin b"><i class="fas fa-flag-checkered"></i></span>
+                    </div>
+                    <div class="cap">
+                        <div><b>Pickup</b>Anywhere in TZ</div>
+                        <div class="text-end"><b>Drop-off</b>On schedule</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- INTRO -->
+<section class="section">
+    <div class="container-x">
+        <div class="row g-5 align-items-center reveal">
+            <div class="col-lg-6">
+                <span class="section-eyebrow">Who we are</span>
+                <h2 class="section-title">Reliable transport, built for Tanzanians</h2>
+                <p class="section-sub" th:text="${settings.aboutText}">LOIE EXPRESSES offers reliable hire services and affordable financing.</p>
+                <a class="btn btn-brand mt-3" th:href="@{/about}">More about us</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6"><div class="why-item"><div class="ic"><i class="fas fa-shield-halved"></i></div><div><strong>Trusted</strong><div class="text-muted small">Safe & dependable</div></div></div></div>
+                    <div class="col-6"><div class="why-item"><div class="ic"><i class="fas fa-hand-holding-dollar"></i></div><div><strong>Affordable</strong><div class="text-muted small">Fair TZS pricing</div></div></div></div>
+                    <div class="col-6"><div class="why-item"><div class="ic"><i class="fas fa-clock"></i></div><div><strong>On time</strong><div class="text-muted small">Punctual service</div></div></div></div>
+                    <div class="col-6"><div class="why-item"><div class="ic"><i class="fas fa-headset"></i></div><div><strong>Support</strong><div class="text-muted small">Always reachable</div></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section bg-soft">
+    <div class="container-x">
+        <div class="text-center mb-5 reveal">
+            <span class="section-eyebrow">What we offer</span>
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-sub mx-auto">From special hire to motorcycle financing, we keep Tanzania moving.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" th:each="s : ${services}">
+                <div class="card-x">
+                    <div class="body">
+                        <div class="svc-icon"><i class="fas" th:classappend="${s.icon != null ? s.icon : 'fa-truck'}"></i></div>
+                        <h5 th:text="${s.title}">Service</h5>
+                        <p class="text-muted" th:text="${s.shortDescription}">Description</p>
+                        <a class="text-green fw-semibold" th:href="@{'/services/' + ${s.slug}}">Learn more <i class="fas fa-arrow-right ms-1 small"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FLEET PREVIEW -->
+<section class="section" th:if="${!vehicles.isEmpty()}">
+    <div class="container-x">
+        <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2 reveal">
+            <div><span class="section-eyebrow">On the road</span><h2 class="section-title">Our Fleet</h2></div>
+            <a class="btn btn-brand" th:href="@{/fleet}">View all</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3" th:each="v : ${vehicles}" th:if="${vehicleStat.index < 4}">
+                <div class="card-x">
+                    <img class="card-img-top" th:if="${v.image != null}" th:src="@{'/uploads/' + ${v.image}}" alt="vehicle">
+                    <div class="body">
+                        <span class="chip" th:text="${v.type}">Type</span>
+                        <h6 class="mt-2 mb-1" th:text="${v.name}">Vehicle</h6>
+                        <div class="text-muted small" th:if="${v.capacity != null}"><i class="fas fa-users me-1"></i><span th:text="${v.capacity}"></span> seats</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY PREVIEW -->
+<section class="section bg-soft" th:if="${!gallery.isEmpty()}">
+    <div class="container-x">
+        <div class="text-center mb-4 reveal"><span class="section-eyebrow">Moments</span><h2 class="section-title">Gallery</h2></div>
+        <div class="gallery-grid">
+            <img th:each="g : ${gallery}" th:if="${gStat.index < 8}" th:src="@{'/uploads/' + ${g.fileName}}" th:alt="${g.title}">
+        </div>
+        <div class="text-center mt-4"><a class="btn btn-brand" th:href="@{/gallery}">Open gallery</a></div>
+    </div>
+</section>
+
+<!-- NEWS -->
+<section class="section" th:if="${!news.isEmpty()}">
+    <div class="container-x">
+        <div class="text-center mb-5 reveal"><span class="section-eyebrow">Updates</span><h2 class="section-title">Latest News</h2></div>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="n : ${news}" th:if="${nStat.index < 3}">
+                <div class="card-x">
+                    <img class="card-img-top" th:if="${n.image != null}" th:src="@{'/uploads/' + ${n.image}}" alt="news">
+                    <div class="body">
+                        <div class="text-muted small mb-1" th:text="${#temporals.format(n.createdAt,'dd MMM yyyy')}">Date</div>
+                        <h6 th:text="${n.title}">Title</h6>
+                        <p class="text-muted small" th:text="${n.summary}">Summary</p>
+                        <a class="text-green fw-semibold" th:href="@{'/news/' + ${n.slug}}">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section bg-navy" style="color:#fff">
+    <div class="container-x">
+        <div class="text-center mb-5 reveal"><span class="section-eyebrow text-gold">Feedback</span><h2 class="section-title text-white">What customers say</h2></div>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="quote-card"><p>"LOIE EXPRESSES helped me finance my first Bodaboda. The process was simple and affordable."</p><div class="who">— Juma M., Dar es Salaam</div></div></div>
+            <div class="col-md-4"><div class="quote-card"><p>"Their special hire service was punctual and comfortable. Highly recommended for events."</p><div class="who">— Neema K., Dodoma</div></div></div>
+            <div class="col-md-4"><div class="quote-card"><p>"The business consultation gave me a clear plan to grow my transport startup."</p><div class="who">— Baraka T., Mwanza</div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT + MAP -->
+<section class="section">
+    <div class="container-x">
+        <div class="row g-4 align-items-stretch reveal">
+            <div class="col-lg-5">
+                <span class="section-eyebrow">Reach us</span>
+                <h2 class="section-title">Contact Section</h2>
+                <p class="text-muted">Have a question or need a ride? Send us a message and our team will respond quickly.</p>
+                <p><i class="fas fa-phone text-green me-2"></i><span th:text="${settings.phone}"></span></p>
+                <p><i class="fas fa-envelope text-green me-2"></i><span th:text="${settings.email}"></span></p>
+                <a class="btn btn-brand" th:href="@{/contact}">Send a message</a>
+            </div>
+            <div class="col-lg-7">
+                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm" th:if="${settings.googleMapEmbed != null}">
+                    <iframe th:src="${settings.googleMapEmbed}" style="border:0" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

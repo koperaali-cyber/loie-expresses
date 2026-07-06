@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Quotes')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('quotes')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head"><h1>Quote Requests</h1><div class="sub">Contact customers and update status</div></div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel"><div class="table-responsive"><table class="table align-middle">
+    <thead><tr><th>Customer</th><th>Contact</th><th>Service</th><th>Details</th><th>Status</th><th>Update</th></tr></thead>
+    <tbody>
+      <tr th:if="${quotes.isEmpty()}"><td colspan="6" class="text-center text-muted">No quote requests.</td></tr>
+      <tr th:each="q : ${quotes}">
+        <td><strong th:text="${q.customerName}"></strong></td>
+        <td class="small"><a th:href="'tel:' + ${q.phone}" th:text="${q.phone}"></a><div class="text-muted" th:text="${q.email}"></div></td>
+        <td th:text="${q.serviceType}"></td>
+        <td class="small text-muted" th:text="${q.details}"></td>
+        <td><span class="badge-status" th:classappend="'s-' + ${q.status}" th:text="${q.status}"></span></td>
+        <td><form th:action="@{'/admin/quotes/status/' + ${q.id}}" method="post" class="d-flex gap-1">
+          <select class="form-select form-select-sm" name="status" style="width:130px">
+            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${s == q.status}"></option></select>
+          <button class="btn btn-sm btn-brand"><i class="fas fa-check"></i></button></form></td>
+      </tr>
+    </tbody>
+  </table></div></div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

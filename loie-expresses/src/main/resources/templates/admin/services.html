@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Services')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('services')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div><h1>Services</h1><div class="sub">Manage the services shown on the website</div></div>
+    <a class="btn btn-brand" th:href="@{/admin/services/form}"><i class="fas fa-plus me-1"></i> Add service</a>
+  </div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel">
+    <div class="table-responsive"><table class="table align-middle">
+      <thead><tr><th>Title</th><th>Slug</th><th>Active</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <tr th:if="${services.isEmpty()}"><td colspan="4" class="text-center text-muted">No services.</td></tr>
+        <tr th:each="s : ${services}">
+          <td><i class="fas me-2 text-green" th:classappend="${s.icon}"></i><span th:text="${s.title}"></span></td>
+          <td class="text-muted" th:text="${s.slug}"></td>
+          <td><span class="badge bg-success" th:if="${s.active}">Yes</span><span class="badge bg-secondary" th:unless="${s.active}">No</span></td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/services/form(id=${s.id})}"><i class="fas fa-pen"></i></a>
+            <form class="d-inline" th:action="@{'/admin/services/delete/' + ${s.id}}" method="post" onsubmit="return confirm('Delete this service?')">
+              <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></form>
+          </td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

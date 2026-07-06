@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LoieExpresses" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="loie-expresses" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.loieexpresses.LoieExpressesApplication" />
+    <method v="2"><option name="Make" enabled="true" /></method>
+  </configuration>
+</component>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Website Settings')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('settings')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+
+<main class="admin-content">
+  <div class="page-head"><h1>Website Settings</h1><div class="sub">Edit homepage, contact, footer, hero, social and SEO — no code needed</div></div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+  <form th:action="@{/admin/settings}" th:object="${form}" method="post" enctype="multipart/form-data">
+    <div class="row g-3">
+      <div class="col-lg-6"><div class="card-panel">
+        <h5>Company information</h5>
+        <div class="mb-2"><label class="form-label">Company name</label><input class="form-control" th:field="*{companyName}"></div>
+        <div class="mb-2"><label class="form-label">Tagline</label><input class="form-control" th:field="*{tagline}"></div>
+        <div class="mb-2"><label class="form-label">Phone</label><input class="form-control" th:field="*{phone}"></div>
+        <div class="mb-2"><label class="form-label">Email</label><input class="form-control" th:field="*{email}"></div>
+        <div class="mb-2"><label class="form-label">Address</label><input class="form-control" th:field="*{address}"></div>
+        <div class="mb-2"><label class="form-label">Logo</label><input class="form-control" type="file" name="logoFile" accept="image/*">
+          <img th:if="*{logo != null}" th:src="@{'/uploads/' + *{logo}}" style="height:40px;margin-top:8px"></div>
+      </div></div>
+
+      <div class="col-lg-6"><div class="card-panel">
+        <h5>Hero section</h5>
+        <div class="mb-2"><label class="form-label">Hero title</label><input class="form-control" th:field="*{heroTitle}"></div>
+        <div class="mb-2"><label class="form-label">Hero subtitle</label><textarea class="form-control" rows="2" th:field="*{heroSubtitle}"></textarea></div>
+        <div class="mb-2"><label class="form-label">Hero image</label><input class="form-control" type="file" name="heroFile" accept="image/*"></div>
+        <h5 class="mt-3">About</h5>
+        <div class="mb-2"><label class="form-label">About text</label><textarea class="form-control" rows="4" th:field="*{aboutText}"></textarea></div>
+      </div></div>
+
+      <div class="col-lg-6"><div class="card-panel">
+        <h5>Footer &amp; social</h5>
+        <div class="mb-2"><label class="form-label">Footer text</label><textarea class="form-control" rows="2" th:field="*{footerText}"></textarea></div>
+        <div class="mb-2"><label class="form-label">Facebook URL</label><input class="form-control" th:field="*{facebook}"></div>
+        <div class="mb-2"><label class="form-label">Instagram URL</label><input class="form-control" th:field="*{instagram}"></div>
+        <div class="mb-2"><label class="form-label">Twitter/X URL</label><input class="form-control" th:field="*{twitter}"></div>
+        <div class="mb-2"><label class="form-label">WhatsApp number</label><input class="form-control" th:field="*{whatsapp}"></div>
+      </div></div>
+
+      <div class="col-lg-6"><div class="card-panel">
+        <h5>Map &amp; SEO</h5>
+        <div class="mb-2"><label class="form-label">Google Map embed URL</label><textarea class="form-control" rows="2" th:field="*{googleMapEmbed}"></textarea></div>
+        <div class="mb-2"><label class="form-label">SEO title</label><input class="form-control" th:field="*{seoTitle}"></div>
+        <div class="mb-2"><label class="form-label">SEO description</label><input class="form-control" th:field="*{seoDescription}"></div>
+        <div class="mb-2"><label class="form-label">SEO keywords</label><input class="form-control" th:field="*{seoKeywords}"></div>
+        <div class="mb-2"><label class="form-label">Site URL (anwani rasmi)</label><input class="form-control" th:field="*{siteUrl}" placeholder="https://loie-expresses.onrender.com"></div>
+      </div></div>
+    </div>
+    <button class="btn btn-brand mt-3 px-4"><i class="fas fa-save me-1"></i> Save settings</button>
+  </form>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

@@ -1,0 +1,96 @@
+/* LOIE EXPRESSES - Admin dashboard styles */
+:root{
+  --navy:#0d1b2a;--navy-2:#14273d;--green:#1b8a4b;--green-dk:#136437;
+  --gold:#f5b301;--line:#e6ebf1;--muted:#6b7a8a;--bg:#f4f6f9;
+  --sidebar-w:260px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#1a2430}
+h1,h2,h3,h4,h5{font-family:'Sora','Inter',sans-serif;font-weight:700;letter-spacing:-.02em}
+a{text-decoration:none}
+
+/* Sidebar */
+.admin-sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy);color:#c9d6e2;overflow-y:auto;z-index:1040;transition:transform .25s}
+.admin-sidebar .brand{padding:22px 20px;font-family:'Sora';font-weight:800;font-size:1.2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.admin-sidebar .brand a{color:#fff}
+.admin-sidebar .brand span{color:var(--green)}
+.admin-sidebar .menu{padding:12px 0 40px}
+.admin-sidebar .menu-label{padding:14px 20px 6px;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:#6d8199}
+.admin-sidebar .menu a{display:flex;align-items:center;gap:.8rem;padding:.7rem 20px;color:#c9d6e2;font-size:.92rem;font-weight:500;border-left:3px solid transparent}
+.admin-sidebar .menu a i{width:20px;text-align:center}
+.admin-sidebar .menu a:hover{background:rgba(255,255,255,.05);color:#fff}
+.admin-sidebar .menu a.active{background:rgba(27,138,75,.18);border-left-color:var(--green);color:#fff}
+
+/* Topbar + content */
+.admin-topbar{position:sticky;top:0;display:flex;align-items:center;gap:1rem;background:#fff;padding:.8rem 1.4rem;border-bottom:1px solid var(--line);margin-left:var(--sidebar-w);z-index:1030}
+.btn-hamburger{display:none;background:none;border:none;font-size:1.3rem;color:var(--navy)}
+.admin-content{margin-left:var(--sidebar-w);padding:1.6rem 1.6rem 3rem}
+.admin-backdrop{display:none;position:fixed;inset:0;background:rgba(13,27,42,.5);z-index:1035}
+.admin-backdrop.show{display:block}
+
+.page-head{margin-bottom:1.4rem}
+.page-head h1{font-size:1.5rem;margin:0}
+.page-head .sub{color:var(--muted);font-size:.9rem}
+
+/* Cards */
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.2rem;display:flex;align-items:center;gap:1rem}
+.stat-card .ic{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:1.3rem}
+.stat-card .num{font-family:'Sora';font-size:1.6rem;font-weight:800;line-height:1}
+.stat-card .lbl{color:var(--muted);font-size:.82rem}
+.card-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.3rem}
+.card-panel h5{margin-bottom:1rem}
+
+.table thead th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.badge-status{font-size:.72rem;font-weight:700;padding:.3rem .6rem;border-radius:999px}
+.s-PENDING{background:#fff3cd;color:#8a6d00}
+.s-APPROVED{background:#d1e7dd;color:#0f5132}
+.s-REJECTED{background:#f8d7da;color:#842029}
+.s-IN_PROGRESS{background:#cfe2ff;color:#084298}
+.s-COMPLETED{background:#e2e3e5;color:#41464b}
+
+.btn-brand{background:var(--green);border:none;color:#fff;font-weight:600;border-radius:8px}
+.btn-brand:hover{background:var(--green-dk);color:#fff}
+.form-control,.form-select{border-radius:8px}
+.form-control:focus,.form-select:focus{border-color:var(--green);box-shadow:0 0 0 .2rem rgba(27,138,75,.15)}
+
+/* Responsive */
+@media(max-width:991px){
+  .admin-sidebar{transform:translateX(-100%)}
+  .admin-sidebar.open{transform:translateX(0)}
+  .admin-topbar,.admin-content{margin-left:0}
+  .btn-hamburger{display:inline-block}
+}
+
+/* =========================================================
+   DARK MODE (inawashwa kwa data-theme="dark")
+   ========================================================= */
+[data-theme="dark"]{
+  --bg:#0f1720;--line:#26323f;--muted:#94a3b5;
+}
+[data-theme="dark"] body{background:var(--bg);color:#e4e9ef}
+[data-theme="dark"] .admin-topbar{background:#141e29;border-bottom-color:var(--line)}
+[data-theme="dark"] .btn-hamburger{color:#e4e9ef}
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .card-panel{background:#141e29;border-color:var(--line);color:#e4e9ef}
+[data-theme="dark"] .page-head h1{color:#f1f5f9}
+[data-theme="dark"] .table{color:#e4e9ef}
+[data-theme="dark"] .table th{color:#aebccb}
+[data-theme="dark"] .table td,[data-theme="dark"] .table th{border-color:var(--line)}
+[data-theme="dark"] .table-responsive{background:transparent}
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select{background:#0f1720;border-color:var(--line);color:#e4e9ef}
+[data-theme="dark"] .form-control::placeholder{color:#6b7a8a}
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus{background:#0f1720;color:#fff;border-color:var(--green)}
+[data-theme="dark"] .dropdown-menu{background:#141e29;border-color:var(--line)}
+[data-theme="dark"] .dropdown-item{color:#e4e9ef}
+[data-theme="dark"] .dropdown-item:hover{background:#1d2b3a;color:#fff}
+[data-theme="dark"] .dropdown-divider{border-color:var(--line)}
+[data-theme="dark"] .btn-outline-secondary{color:#c9d6e2;border-color:#3a4a5b}
+[data-theme="dark"] .btn-outline-secondary:hover{background:#26323f;color:#fff}
+[data-theme="dark"] .text-muted{color:var(--muted)!important}
+[data-theme="dark"] .border-bottom{border-color:var(--line)!important}
+[data-theme="dark"] .alert-success{background:#123322;color:#a7f3c4;border-color:#1c5236}
+[data-theme="dark"] .alert-danger{background:#3a1720;color:#f7b7c2;border-color:#63232f}
+[data-theme="dark"] .alert-warning{background:#3a3212;color:#ffe08a;border-color:#6b5b1c}
+/* Sidebar tayari ni ya rangi ya navy — inaendelea vizuri kwenye dark */

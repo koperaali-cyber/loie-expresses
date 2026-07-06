@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Consultations')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('consultations')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head"><h1>Consultation Requests</h1><div class="sub">Transport business consultation</div></div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel"><div class="table-responsive"><table class="table align-middle">
+    <thead><tr><th>Customer</th><th>Contact</th><th>Topic</th><th>Message</th><th>Status</th><th>Update</th></tr></thead>
+    <tbody>
+      <tr th:if="${consultations.isEmpty()}"><td colspan="6" class="text-center text-muted">No requests.</td></tr>
+      <tr th:each="c : ${consultations}">
+        <td><strong th:text="${c.customerName}"></strong></td>
+        <td class="small"><div th:text="${c.phone}"></div><div class="text-muted" th:text="${c.email}"></div></td>
+        <td th:text="${c.topic}"></td>
+        <td class="small text-muted" th:text="${c.message}"></td>
+        <td><span class="badge-status" th:classappend="'s-' + ${c.status}" th:text="${c.status}"></span></td>
+        <td><form th:action="@{'/admin/consultations/status/' + ${c.id}}" method="post" class="d-flex gap-1">
+          <select class="form-select form-select-sm" name="status" style="width:130px">
+            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${s == c.status}"></option></select>
+          <button class="btn btn-sm btn-brand"><i class="fas fa-check"></i></button></form></td>
+      </tr>
+    </tbody>
+  </table></div></div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

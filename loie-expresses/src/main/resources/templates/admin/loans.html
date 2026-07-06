@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Loan Applications')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('loans')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head"><h1>Loan Applications</h1><div class="sub">Bajaj &amp; Bodaboda financing</div></div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel"><div class="table-responsive"><table class="table align-middle">
+    <thead><tr><th>Applicant</th><th>Contact</th><th>Type</th><th>Amount (TZS)</th><th>Status &amp; notes</th></tr></thead>
+    <tbody>
+      <tr th:if="${loans.isEmpty()}"><td colspan="5" class="text-center text-muted">No applications.</td></tr>
+      <tr th:each="l : ${loans}">
+        <td><strong th:text="${l.applicantName}"></strong><div class="small text-muted" th:text="${l.nationalId}"></div></td>
+        <td class="small"><div th:text="${l.phone}"></div><div class="text-muted" th:text="${l.email}"></div></td>
+        <td><span class="badge bg-dark" th:text="${l.loanType}"></span><div class="small text-muted" th:if="${l.termMonths != null}"><span th:text="${l.termMonths}"></span> mo</div></td>
+        <td th:text="${l.amount != null ? #numbers.formatDecimal(l.amount,0,'COMMA',0,'POINT') : '-'}"></td>
+        <td><form th:action="@{'/admin/loans/update/' + ${l.id}}" method="post">
+          <div class="d-flex gap-1 mb-1">
+            <select class="form-select form-select-sm" name="status" style="width:130px">
+              <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${s == l.status}"></option></select>
+            <button class="btn btn-sm btn-brand"><i class="fas fa-save"></i></button>
+          </div>
+          <input class="form-control form-control-sm" name="notes" th:value="${l.notes}" placeholder="Notes...">
+        </form></td>
+      </tr>
+    </tbody>
+  </table></div></div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

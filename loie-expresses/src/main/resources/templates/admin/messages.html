@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Messages')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('messages')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head"><h1>Contact Messages</h1><div class="sub">Inbox from the public contact form</div></div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel">
+    <div th:if="${messages.isEmpty()}" class="text-muted">Inbox is empty.</div>
+    <div th:each="m : ${messages}" class="border-bottom py-3">
+      <div class="d-flex justify-content-between flex-wrap">
+        <div>
+          <strong th:text="${m.name}"></strong>
+          <span class="badge bg-warning text-dark ms-1" th:unless="${m.read}">New</span>
+          <div class="small text-muted"><a th:href="'mailto:' + ${m.email}" th:text="${m.email}"></a> &middot; <span th:text="${m.phone}"></span></div>
+        </div>
+        <div class="small text-muted" th:text="${#temporals.format(m.createdAt,'dd MMM yyyy HH:mm')}"></div>
+      </div>
+      <div class="fw-semibold mt-2" th:text="${m.subject}"></div>
+      <p class="mb-2 text-muted" th:text="${m.message}"></p>
+      <div class="d-flex gap-2">
+        <a class="btn btn-sm btn-brand" th:href="'mailto:' + ${m.email}"><i class="fas fa-reply me-1"></i>Reply</a>
+        <form th:action="@{'/admin/messages/read/' + ${m.id}}" method="post" th:unless="${m.read}">
+          <button class="btn btn-sm btn-outline-secondary">Mark read</button></form>
+        <form th:action="@{'/admin/messages/delete/' + ${m.id}}" method="post" onsubmit="return confirm('Delete?')">
+          <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></form>
+      </div>
+    </div>
+  </div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Fleet')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="page-banner"><div class="container-x"><div class="crumb"><a th:href="@{/}">Home</a> / Fleet</div><h1>Our Fleet</h1></div></div>
+<section class="section">
+  <div class="container-x">
+    <div th:if="${vehicles.isEmpty()}" class="text-center text-muted">No vehicles listed yet.</div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" th:each="v : ${vehicles}">
+        <div class="card-x">
+          <img class="card-img-top" th:if="${v.image != null}" th:src="@{'/uploads/' + ${v.image}}" alt="vehicle">
+          <div class="body">
+            <span class="chip" th:text="${v.type}">Type</span>
+            <h5 class="mt-2" th:text="${v.name}">Name</h5>
+            <p class="text-muted small" th:text="${v.description}">Desc</p>
+            <div class="d-flex gap-3 text-muted small">
+              <span th:if="${v.capacity != null}"><i class="fas fa-users me-1"></i><span th:text="${v.capacity}"></span> seats</span>
+              <span th:if="${v.plateNumber != null}"><i class="fas fa-id-card me-1"></i><span th:text="${v.plateNumber}"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body></html>

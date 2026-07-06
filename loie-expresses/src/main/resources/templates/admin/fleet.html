@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout :: head('Fleet')}"></head>
+<body>
+<aside th:replace="~{fragments/admin-layout :: sidebar('fleet')}"></aside>
+<div th:replace="~{fragments/admin-layout :: backdrop}"></div>
+<header th:replace="~{fragments/admin-layout :: topbar}"></header>
+<main class="admin-content">
+  <div class="page-head d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div><h1>Fleet</h1><div class="sub">Manage your vehicles</div></div>
+    <a class="btn btn-brand" th:href="@{/admin/fleet/form}"><i class="fas fa-plus me-1"></i> Add vehicle</a>
+  </div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div class="card-panel">
+    <div class="table-responsive"><table class="table align-middle">
+      <thead><tr><th>Image</th><th>Name</th><th>Type</th><th>Capacity</th><th>Available</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <tr th:if="${vehicles.isEmpty()}"><td colspan="6" class="text-center text-muted">No vehicles.</td></tr>
+        <tr th:each="v : ${vehicles}">
+          <td><img th:if="${v.image != null}" th:src="@{'/uploads/' + ${v.image}}" style="height:42px;border-radius:6px"></td>
+          <td th:text="${v.name}"></td><td th:text="${v.type}"></td><td th:text="${v.capacity}"></td>
+          <td><span class="badge bg-success" th:if="${v.available}">Yes</span><span class="badge bg-secondary" th:unless="${v.available}">No</span></td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/fleet/form(id=${v.id})}"><i class="fas fa-pen"></i></a>
+            <form class="d-inline" th:action="@{'/admin/fleet/delete/' + ${v.id}}" method="post" onsubmit="return confirm('Delete?')">
+              <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button></form>
+          </td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+</main>
+<th:block th:replace="~{fragments/admin-layout :: scripts}"></th:block>
+</body></html>

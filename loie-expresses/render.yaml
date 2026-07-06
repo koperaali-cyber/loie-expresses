@@ -1,0 +1,37 @@
+# Render Blueprint - inaunda website + PostgreSQL kwa pamoja
+services:
+  - type: web
+    name: loie-expresses
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: loie-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: loie-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: loie-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: loie-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: loie-db
+          property: password
+      - key: THYMELEAF_CACHE
+        value: "true"
+
+databases:
+  - name: loie-db
+    plan: free
+    databaseName: loie_db
+    user: loie_user

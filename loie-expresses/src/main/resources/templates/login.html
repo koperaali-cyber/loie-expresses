@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Login')}"></head>
+<body style="background:linear-gradient(120deg,#0d1b2a,#136437);min-height:100vh">
+<div class="container-x d-flex align-items-center justify-content-center" style="min-height:100vh">
+  <div class="form-card" style="max-width:420px;width:100%">
+    <div class="text-center mb-4">
+      <div class="navbar-brand-logo">LOUIE<span>EXPRESSES</span></div>
+      <p class="text-muted small mb-0">Admin Dashboard Login</p>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger py-2">Invalid username or password.</div>
+    <div th:if="${param.logout}" class="alert alert-success py-2">You have been logged out.</div>
+    <div th:if="${param.reset}" class="alert alert-success py-2">Password reset. Please log in.</div>
+    <form th:action="@{/login}" method="post">
+      <div class="mb-3"><label class="form-label">Username</label><input class="form-control" name="username" required autofocus></div>
+      <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required></div>
+      <button class="btn btn-brand w-100" type="submit">Sign in</button>
+    </form>
+    <div class="text-center mt-3"><a class="small" th:href="@{/forgot-password}">Forgot password?</a></div>
+    <div class="text-center mt-2"><a class="small text-muted" th:href="@{/}">&larr; Back to website</a></div>
+    <div class="alert alert-info small mt-3 mb-0">Welcome: <b>Louie</b> / <b>Company</b></div>
+  </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body></html>

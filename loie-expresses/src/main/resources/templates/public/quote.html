@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Get a Quote')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="page-banner"><div class="container-x"><div class="crumb"><a th:href="@{/}">Home</a> / Get a Quote</div><h1>Request a Service</h1></div></div>
+<section class="section">
+  <div class="container-x" style="max-width:860px">
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <ul class="nav nav-pills justify-content-center gap-2 mb-4" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-quote">Quote</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-booking">Booking</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-loan">Financing</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-consult">Consultation</button></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- QUOTE -->
+      <div class="tab-pane fade show active" id="tab-quote">
+        <form class="form-card" th:action="@{/submit/quote}" method="post">
+          <h5 class="mb-3">Get a price quote</h5>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" name="customerName" required></div>
+            <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" required></div>
+            <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+            <div class="col-md-6"><label class="form-label">Service</label>
+              <select class="form-select" name="serviceType">
+                <option th:each="s : ${services}" th:value="${s.title}" th:text="${s.title}"></option>
+              </select></div>
+            <div class="col-12"><label class="form-label">Details</label><textarea class="form-control" name="details" rows="4"></textarea></div>
+            <div class="col-12"><button class="btn btn-brand">Request quote</button></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- BOOKING -->
+      <div class="tab-pane fade" id="tab-booking">
+        <form class="form-card" th:action="@{/submit/booking}" method="post">
+          <h5 class="mb-3">Book a hire</h5>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" name="customerName" required></div>
+            <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" required></div>
+            <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+            <div class="col-md-6"><label class="form-label">Service type</label>
+              <select class="form-select" name="serviceType">
+                <option>Special Hire</option><option>Private Hire</option>
+              </select></div>
+            <div class="col-md-6"><label class="form-label">Pickup location</label><input class="form-control" name="pickupLocation"></div>
+            <div class="col-md-6"><label class="form-label">Drop-off location</label><input class="form-control" name="dropoffLocation"></div>
+            <div class="col-md-6"><label class="form-label">Travel date</label><input class="form-control" type="datetime-local" name="travelDate"></div>
+            <div class="col-12"><label class="form-label">Message</label><textarea class="form-control" name="message" rows="3"></textarea></div>
+            <div class="col-12"><button class="btn btn-brand">Submit booking</button></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- LOAN -->
+      <div class="tab-pane fade" id="tab-loan">
+        <form class="form-card" th:action="@{/submit/loan}" method="post">
+          <h5 class="mb-3">Bajaj / Bodaboda financing</h5>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" name="applicantName" required></div>
+            <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" required></div>
+            <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+            <div class="col-md-6"><label class="form-label">National ID</label><input class="form-control" name="nationalId"></div>
+            <div class="col-md-4"><label class="form-label">Loan type</label>
+              <select class="form-select" name="loanType"><option value="BAJAJ">Bajaj</option><option value="BODABODA">Bodaboda</option></select></div>
+            <div class="col-md-4"><label class="form-label">Amount (TZS)</label><input class="form-control" type="number" step="1000" name="amount"></div>
+            <div class="col-md-4"><label class="form-label">Term (months)</label><input class="form-control" type="number" name="termMonths"></div>
+            <div class="col-12"><button class="btn btn-brand">Apply for financing</button></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- CONSULTATION -->
+      <div class="tab-pane fade" id="tab-consult">
+        <form class="form-card" th:action="@{/submit/consultation}" method="post">
+          <h5 class="mb-3">Transport business consultation</h5>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" name="customerName" required></div>
+            <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" required></div>
+            <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+            <div class="col-md-6"><label class="form-label">Topic</label><input class="form-control" name="topic"></div>
+            <div class="col-12"><label class="form-label">Message</label><textarea class="form-control" name="message" rows="4"></textarea></div>
+            <div class="col-12"><button class="btn btn-brand">Request consultation</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body></html>
