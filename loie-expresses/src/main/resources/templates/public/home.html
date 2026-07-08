@@ -86,54 +86,60 @@
 </section>
 
 <!-- FLEET PREVIEW -->
-<section class="section" th:if="${!vehicles.isEmpty()}">
+<section class="section" th:if="${vehicles != null and !vehicles.isEmpty()}">
     <div class="container-x">
         <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2 reveal">
             <div><span class="section-eyebrow">On the road</span><h2 class="section-title">Our Fleet</h2></div>
             <a class="btn btn-brand" th:href="@{/fleet}">View all</a>
         </div>
         <div class="row g-4">
-            <div class="col-md-6 col-lg-3" th:each="v : ${vehicles}" th:if="${vehicleStat.index < 4}">
-                <div class="card-x">
-                    <img class="card-img-top" th:if="${v.image != null}" th:src="@{'/uploads/' + ${v.image}}" alt="vehicle">
-                    <div class="body">
-                        <span class="chip" th:text="${v.type}">Type</span>
-                        <h6 class="mt-2 mb-1" th:text="${v.name}">Vehicle</h6>
-                        <div class="text-muted small" th:if="${v.capacity != null}"><i class="fas fa-users me-1"></i><span th:text="${v.capacity}"></span> seats</div>
+            <th:block th:each="v, vehicleStat : ${vehicles}">
+                <div class="col-md-6 col-lg-3" th:if="${vehicleStat.index < 4}">
+                    <div class="card-x">
+                        <img class="card-img-top" th:if="${v.image != null}" th:src="@{'/uploads/' + ${v.image}}" alt="vehicle">
+                        <div class="body">
+                            <span class="chip" th:text="${v.type}">Type</span>
+                            <h6 class="mt-2 mb-1" th:text="${v.name}">Vehicle</h6>
+                            <div class="text-muted small" th:if="${v.capacity != null}"><i class="fas fa-users me-1"></i><span th:text="${v.capacity}"></span> seats</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </div>
 </section>
 
 <!-- GALLERY PREVIEW -->
-<section class="section bg-soft" th:if="${!gallery.isEmpty()}">
+<section class="section bg-soft" th:if="${gallery != null and !gallery.isEmpty()}">
     <div class="container-x">
         <div class="text-center mb-4 reveal"><span class="section-eyebrow">Moments</span><h2 class="section-title">Gallery</h2></div>
         <div class="gallery-grid">
-            <img th:each="g : ${gallery}" th:if="${gStat.index < 8}" th:src="@{'/uploads/' + ${g.fileName}}" th:alt="${g.title}">
+            <th:block th:each="g, gStat : ${gallery}">
+                <img th:if="${gStat.index < 8}" th:src="@{'/uploads/' + ${g.fileName}}" th:alt="${g.title}">
+            </th:block>
         </div>
         <div class="text-center mt-4"><a class="btn btn-brand" th:href="@{/gallery}">Open gallery</a></div>
     </div>
 </section>
 
 <!-- NEWS -->
-<section class="section" th:if="${!news.isEmpty()}">
+<section class="section" th:if="${news != null and !news.isEmpty()}">
     <div class="container-x">
         <div class="text-center mb-5 reveal"><span class="section-eyebrow">Updates</span><h2 class="section-title">Latest News</h2></div>
         <div class="row g-4">
-            <div class="col-md-4" th:each="n : ${news}" th:if="${nStat.index < 3}">
-                <div class="card-x">
-                    <img class="card-img-top" th:if="${n.image != null}" th:src="@{'/uploads/' + ${n.image}}" alt="news">
-                    <div class="body">
-                        <div class="text-muted small mb-1" th:text="${#temporals.format(n.createdAt,'dd MMM yyyy')}">Date</div>
-                        <h6 th:text="${n.title}">Title</h6>
-                        <p class="text-muted small" th:text="${n.summary}">Summary</p>
-                        <a class="text-green fw-semibold" th:href="@{'/news/' + ${n.slug}}">Read more</a>
+            <th:block th:each="n, nStat : ${news}">
+                <div class="col-md-4" th:if="${nStat.index < 3}">
+                    <div class="card-x">
+                        <img class="card-img-top" th:if="${n.image != null}" th:src="@{'/uploads/' + ${n.image}}" alt="news">
+                        <div class="body">
+                            <div class="text-muted small mb-1" th:text="${#temporals.format(n.createdAt,'dd MMM yyyy')}">Date</div>
+                            <h6 th:text="${n.title}">Title</h6>
+                            <p class="text-muted small" th:text="${n.summary}">Summary</p>
+                            <a class="text-green fw-semibold" th:href="@{'/news/' + ${n.slug}}">Read more</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </div>
 </section>
@@ -158,12 +164,12 @@
                 <span class="section-eyebrow">Reach us</span>
                 <h2 class="section-title">Contact Section</h2>
                 <p class="text-muted">Have a question or need a ride? Send us a message and our team will respond quickly.</p>
-                <p><i class="fas fa-phone text-green me-2"></i><span th:text="${settings.phone}"></span></p>
-                <p><i class="fas fa-envelope text-green me-2"></i><span th:text="${settings.email}"></span></p>
+                <p><i class="fas fa-phone text-green me-2"></i><span th:text="${settings != null ? settings.phone : ''}"></span></p>
+                <p><i class="fas fa-envelope text-green me-2"></i><span th:text="${settings != null ? settings.email : ''}"></span></p>
                 <a class="btn btn-brand" th:href="@{/contact}">Send a message</a>
             </div>
             <div class="col-lg-7">
-                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm" th:if="${settings.googleMapEmbed != null}">
+                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm" th:if="${settings != null and settings.googleMapEmbed != null}">
                     <iframe th:src="${settings.googleMapEmbed}" style="border:0" allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
